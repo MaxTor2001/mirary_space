@@ -3,6 +3,8 @@ from decimal import Decimal
 
 from django.db import models
 
+from .images import FULL_SIDE, THUMB_SIDE, basename, encode, thumb_filename
+
 
 class Category(models.Model):
     """Категория каталога, например «Серьги для носа»."""
@@ -32,6 +34,7 @@ class Product(models.Model):
     discount = models.DecimalField("Скидка, %", max_digits=5, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField("Остаток", default=0)
     image = models.ImageField("Изображение", upload_to="goods/", blank=True, null=True)
+    thumbnail = models.ImageField("Миниатюра", upload_to="goods/thumbs/", blank=True, editable=False)
     category = models.ForeignKey(
         Category, on_delete=models.PROTECT, related_name="products", verbose_name="Категория"
     )
@@ -44,6 +47,42 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Имя картинки на момент загрузки из базы: по нему видно, что при
+        # замене фото прежний файл надо удалить — сам Django его не трогает.
+        self._loaded_image = self.image.name
+
+    def save(self, *args, **kwargs):
+        """После сохранения ужимает загруженный оригинал и обновляет миниатюру."""
+        super().save(*args, **kwargs)
+
+        if self._loaded_image and self._loaded_image != self.image.name:
+            self.image.storage.delete(self._loaded_image)
+            self._loaded_image = self.image.name
+
+        if not self.image:
+            return
+
+        wanted = thumb_filename(self.image.name)
+        if basename(self.thumbnail.name) == wanted:
+            return
+
+        self.image.open("rb")
+        original = self.image.read()
+
+        # Старые файлы удаляются, иначе хранилище выдаст новое имя с суффиксом,
+        # а прежний многомегабайтный оригинал останется лежать на диске.
+        image_file = basename(self.image.name)
+        self.image.storage.delete(self.image.name)
+        if self.thumbnail:
+            self.thumbnail.storage.delete(self.thumbnail.name)
+
+        self.image.save(image_file, encode(original, FULL_SIDE), save=False)
+        self.thumbnail.save(wanted, encode(original, THUMB_SIDE), save=False)
+        super().save(update_fields=["image", "thumbnail"])
+        self._loaded_image = self.image.name
 
     @property
     def sell_price(self) -> Decimal:

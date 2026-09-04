@@ -1,7 +1,7 @@
 <article class="card">
   <a class="card__image" href="/product/<%= item.slug %>">
     <% if (item.image) { %>
-      <img src="<%= item.image %>" alt="<%= item.name %>">
+      <img src="<%= item.thumbnail || item.image %>" alt="<%= item.name %>" loading="lazy">
     <% } else { %>
       <span class="card__mark"><%= item.name.charAt(0) %></span>
     <% } %>

@@ -5,6 +5,10 @@ from rest_framework import serializers
 from .models import Category, Product
 
 
+def _media_url(field):
+    return settings.PUBLIC_MEDIA_URL + field.name if field else None
+
+
 class CategorySerializer(serializers.ModelSerializer):
     products_count = serializers.IntegerField(source="products.count", read_only=True)
 
@@ -17,16 +21,19 @@ class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
     sell_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     image = serializers.SerializerMethodField()
+    thumbnail = serializers.SerializerMethodField()
 
     def get_image(self, product):
         """Адрес картинки для браузера, а не для внутренней сети docker."""
-        if not product.image:
-            return None
-        return settings.PUBLIC_MEDIA_URL + product.image.name
+        return _media_url(product.image)
+
+    def get_thumbnail(self, product):
+        """Уменьшенная версия для каталога; если её нет — отдаём оригинал."""
+        return _media_url(product.thumbnail) or _media_url(product.image)
 
     class Meta:
         model = Product
         fields = (
             "id", "name", "slug", "description", "material", "size",
-            "price", "discount", "sell_price", "quantity", "image", "category",
+            "price", "discount", "sell_price", "quantity", "image", "thumbnail", "category",
         )
