@@ -183,6 +183,9 @@ h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-
 .checkout__terms { color: var(--muted); font-size: 0.85rem; margin: 0.9rem 0 0; }
 .checkout__terms a { text-decoration: underline; }
 
+.pay { border: 1px solid var(--line); border-radius: var(--radius); padding: 0.9rem 1rem; margin: 0.4rem 0 0.2rem; display: grid; gap: 0.6rem; }
+.pay__title { color: var(--muted); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.08em; padding: 0 0.3rem; }
+
 /* Таблицы */
 .table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
 .table th, .table td { text-align: left; padding: 0.85rem 0.6rem; border-bottom: 1px solid var(--line); }

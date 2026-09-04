@@ -18,9 +18,17 @@
 <div class="summary">
   <div class="summary__row"><span>Получатель</span><span><%= order.first_name %> <%= order.last_name %>, <%= order.phone %></span></div>
   <div class="summary__row"><span>Доставка</span><span><%= order.requires_delivery ? (order.delivery_address || 'по указанному адресу') : 'самовывоз' %></span></div>
-  <div class="summary__row"><span>Оплата</span><span><%= order.payment_on_get ? 'при получении' : 'онлайн' %></span></div>
+  <div class="summary__row"><span>Оплата</span><span>
+    <% if (order.is_paid) { %>оплачен<% } else if (order.payment_on_get) { %>при получении<% } else { %>онлайн, ожидает оплаты<% } %>
+  </span></div>
   <div class="summary__total"><span>Итого</span><strong><%= price(order.total_price) %></strong></div>
 </div>
+
+<% if (!order.is_paid && !order.payment_on_get) { %>
+  <form action="/orders/<%= order.id %>/pay" method="post">
+    <button class="btn">Оплатить <%= price(order.total_price) %></button>
+  </form>
+<% } %>
 
 <p><a class="btn btn--ghost" href="/orders">К списку заказов</a></p>
 

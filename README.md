@@ -104,9 +104,11 @@ ssh fstek 'cd /home/deploy/mirari && git reset --hard <хеш> && \
 
 ## Оплата
 
-Онлайн-оплаты пока нет: заказ оформляется с оплатой при получении. Что нужно сделать, чтобы
-подключить ЮKassa, — в [docs/PAYMENTS.md](docs/PAYMENTS.md), памятка владельцу магазина —
-в [docs/OWNER-CHECKLIST.md](docs/OWNER-CHECKLIST.md). Оферта и политика обработки персональных
+Приём платежей через ЮKassa написан (приложение `payments`): создание платежа, форма оплаты,
+уведомление `/api/payments/webhook/` и повтор оплаты со страницы заказа. Онлайн-оплата
+предлагается покупателю, только когда в `.env` заданы `YOOKASSA_SHOP_ID` и `YOOKASSA_SECRET_KEY`,
+иначе остаётся оплата при получении. Что нужно от владельца магазина, чтобы получить ключи, —
+в [docs/PAYMENTS.md](docs/PAYMENTS.md) и [docs/OWNER-CHECKLIST.md](docs/OWNER-CHECKLIST.md). Оферта и политика обработки персональных
 данных живут на `/offer` и `/privacy`, тексты — в `backend/main/legal.py`, реквизиты в них
 подставляются из переменных `SHOP_*`.
 

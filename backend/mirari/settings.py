@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "goods",
     "carts",
     "orders",
+    "payments",
 ]
 
 MIDDLEWARE = [
@@ -103,6 +104,18 @@ MEDIA_ROOT = BASE_DIR / "media"
 PUBLIC_MEDIA_URL = os.environ.get("PUBLIC_MEDIA_URL", "http://localhost:8000/media/").rstrip("/") + "/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Публичный адрес витрины: на него ЮKassa возвращает покупателя после оплаты.
+SITE_URL = os.environ.get("SITE_URL", "http://localhost:3000").rstrip("/")
+
+# Ключи ЮKassa. Пока их нет, онлайн-оплата на сайте просто не предлагается.
+YOOKASSA_SHOP_ID = os.environ.get("YOOKASSA_SHOP_ID", "")
+YOOKASSA_SECRET_KEY = os.environ.get("YOOKASSA_SECRET_KEY", "")
+# Чек по 54-ФЗ формирует облачная касса ЮKassa; без подключённой кассы чек не отправить.
+YOOKASSA_SEND_RECEIPT = os.environ.get("YOOKASSA_SEND_RECEIPT", "1") == "1"
+# 1 — без НДС; систему налогообложения указывают, только если их у кассы несколько.
+YOOKASSA_VAT_CODE = os.environ.get("YOOKASSA_VAT_CODE", "1")
+YOOKASSA_TAX_SYSTEM_CODE = os.environ.get("YOOKASSA_TAX_SYSTEM_CODE", "")
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [

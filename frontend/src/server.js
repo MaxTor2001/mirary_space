@@ -33,6 +33,17 @@ app.use(express.static(path.join(dirname, "..", "public")));
 
 /** robots.txt и sitemap.xml — до сессии: роботу не нужна ни кука, ни корзина. */
 app.use("/", seoRouter);
+
+/**
+ * Уведомления ЮKassa об оплате. Наружу nginx отдаёт только витрину, адреса /api закрыты,
+ * поэтому тело уведомления принимает она и передаёт в API: там платёж перечитывается
+ * в ЮKassa и заказ помечается оплаченным. Ошибка ответит 500 — ЮKassa повторит уведомление.
+ */
+app.post("/api/payments/webhook/", express.json(), async (req, res) => {
+  await api("/payments/webhook/", { method: "POST", body: req.body });
+  res.sendStatus(200);
+});
+
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "mirari-dev-secret",

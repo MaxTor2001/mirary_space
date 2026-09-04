@@ -34,6 +34,12 @@ services:
       PUBLIC_MEDIA_URL: ${PUBLIC_MEDIA_URL:-http://localhost:8000/media/}
       SHOP_LEGAL_NAME: ${SHOP_LEGAL_NAME:-ИП Канищева Екатерина Владимировна}
       SHOP_INN: ${SHOP_INN:-745110010453}
+      SITE_URL: ${SITE_URL:-http://localhost:3000}
+      YOOKASSA_SHOP_ID: ${YOOKASSA_SHOP_ID:-}
+      YOOKASSA_SECRET_KEY: ${YOOKASSA_SECRET_KEY:-}
+      YOOKASSA_SEND_RECEIPT: ${YOOKASSA_SEND_RECEIPT:-1}
+      YOOKASSA_VAT_CODE: ${YOOKASSA_VAT_CODE:-1}
+      YOOKASSA_TAX_SYSTEM_CODE: ${YOOKASSA_TAX_SYSTEM_CODE:-}
     volumes:
       - media:/app/media
     ports:

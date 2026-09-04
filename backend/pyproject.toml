@@ -13,4 +13,5 @@ dependencies = [
     "gunicorn>=23.0",
     "whitenoise>=6.11",
     "python-slugify>=8.0.4",
+    "yookassa>=3.12.1",
 ]

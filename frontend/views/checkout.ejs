@@ -15,7 +15,15 @@
     </div>
     <label>Адрес доставки<textarea class="input" name="delivery_address" rows="3"><%= form.delivery_address || '' %></textarea></label>
     <label class="check"><input type="checkbox" name="requires_delivery" checked> Нужна доставка</label>
-    <label class="check"><input type="checkbox" name="payment_on_get" checked> Оплата при получении</label>
+
+    <fieldset class="pay">
+      <legend class="pay__title">Оплата</legend>
+      <% if (onlinePayment) { %>
+        <label class="check"><input type="radio" name="payment_method" value="online" <%= form.payment_method !== 'on_get' ? 'checked' : '' %>> Онлайн картой или через СБП</label>
+      <% } %>
+      <label class="check"><input type="radio" name="payment_method" value="on_get" <%= !onlinePayment || form.payment_method === 'on_get' ? 'checked' : '' %>> При получении</label>
+    </fieldset>
+
     <button class="btn">Подтвердить заказ</button>
     <p class="checkout__terms">Подтверждая заказ, вы принимаете условия <a href="/offer">оферты</a>
       и соглашаетесь с <a href="/privacy">обработкой персональных данных</a>.</p>
