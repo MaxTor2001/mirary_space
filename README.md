@@ -69,9 +69,19 @@ GET  /api/orders/<id>/              детали заказа
 Продакшен-оверлей `docker-compose.prod.yml`: БД без публикации портов, API только на
 `127.0.0.1:8000`, наружу смотрит одна витрина на `SHOP_PUBLIC_PORT` (по умолчанию 8080).
 
+Сервер — git-checkout той же ветки `main`, выкатка забирает код из репозитория:
+
 ```bash
-rsync -az --exclude .venv --exclude node_modules --exclude .env ./ server:/path/mirari/
-ssh server 'cd /path/mirari && docker compose -f docker-compose.yml -f docker-compose.prod.yml -p mirari up -d --build'
+git push origin main
+ssh fstek '/home/deploy/mirari/deploy/deploy.sh'
+```
+
+Скрипт делает `git fetch` + `reset --hard origin/main` и пересобирает контейнеры.
+`.env` он не трогает — тот в `.gitignore`. Откат на предыдущую версию:
+
+```bash
+ssh fstek 'cd /home/deploy/mirari && git reset --hard <хеш> && \
+  docker compose -f docker-compose.yml -f docker-compose.prod.yml -p mirari up -d --build'
 ```
 
 `.env` на сервере обязателен: `DJANGO_DEBUG=0`, `DJANGO_ALLOWED_HOSTS` со списком хостов
