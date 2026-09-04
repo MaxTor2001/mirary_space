@@ -14,4 +14,3 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "category", "price", "discount", "quantity")
     list_filter = ("category",)
     search_fields = ("name", "description")
-    prepopulated_fields = {"slug": ("name",)}

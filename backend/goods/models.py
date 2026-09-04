@@ -2,6 +2,7 @@
 from decimal import Decimal
 
 from django.db import models
+from slugify import slugify
 
 from .images import FULL_SIDE, THUMB_SIDE, basename, encode, thumb_filename
 
@@ -26,7 +27,10 @@ class Product(models.Model):
     """Товар каталога с ценой, скидкой и остатком на складе."""
 
     name = models.CharField("Название", max_length=200)
-    slug = models.SlugField("URL", max_length=250, unique=True)
+    slug = models.SlugField(
+        "URL", max_length=250, unique=True, blank=True,
+        help_text="Пустое поле — адрес соберётся из названия автоматически.",
+    )
     description = models.TextField("Описание", blank=True)
     material = models.CharField("Материал", max_length=100, blank=True)
     size = models.CharField("Размер", max_length=50, blank=True)
@@ -56,6 +60,8 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         """После сохранения ужимает загруженный оригинал и обновляет миниатюру."""
+        if not self.slug:
+            self.slug = self._build_slug()
         super().save(*args, **kwargs)
 
         if self._loaded_image and self._loaded_image != self.image.name:
@@ -83,6 +89,16 @@ class Product(models.Model):
         self.thumbnail.save(wanted, encode(original, THUMB_SIDE), save=False)
         super().save(update_fields=["image", "thumbnail"])
         self._loaded_image = self.image.name
+
+    def _build_slug(self) -> str:
+        """Адрес из названия; при совпадении добавляет числовой суффикс."""
+        base = slugify(self.name)[:240] or "tovar"
+        slug = base
+        number = 2
+        while Product.objects.filter(slug=slug).exists():
+            slug = f"{base}-{number}"
+            number += 1
+        return slug
 
     @property
     def sell_price(self) -> Decimal:
