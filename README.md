@@ -110,7 +110,7 @@ cd backend && uv sync && uv run manage.py migrate && uv run manage.py runserver
 
 # фронтенд
 cd frontend && npm install && API_URL=http://localhost:8000/api npm run dev
-```Хо
+```
 
 ## Полезные команды
 
