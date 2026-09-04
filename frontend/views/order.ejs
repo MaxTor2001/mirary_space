@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">Заказ №<%= order.id %></h1>
+<p class="muted">
+  <%= new Date(order.created_at).toLocaleString('ru-RU') %> ·
+  <span class="status status--<%= order.status %>"><%= order.status_display %></span>
+</p>
+
+<table class="table">
+  <thead><tr><th>Товар</th><th>Цена</th><th>Количество</th><th>Сумма</th></tr></thead>
+  <tbody>
+    <% order.items.forEach(function (item) { %>
+      <tr><td><%= item.name %></td><td><%= price(item.price) %></td><td><%= item.quantity %></td><td><%= price(item.products_price) %></td></tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<div class="summary">
+  <div class="summary__row"><span>Получатель</span><span><%= order.first_name %> <%= order.last_name %>, <%= order.phone %></span></div>
+  <div class="summary__row"><span>Доставка</span><span><%= order.requires_delivery ? (order.delivery_address || 'по указанному адресу') : 'самовывоз' %></span></div>
+  <div class="summary__row"><span>Оплата</span><span><%= order.payment_on_get ? 'при получении' : 'онлайн' %></span></div>
+  <div class="summary__total"><span>Итого</span><strong><%= price(order.total_price) %></strong></div>
+</div>
+
+<p><a class="btn btn--ghost" href="/orders">К списку заказов</a></p>
+
+<%- include('partials/footer') %>

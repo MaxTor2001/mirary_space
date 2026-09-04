@@ -1,0 +1,17 @@
+<%- include('partials/header') %>
+<h1 class="page-title">Контакты</h1>
+<div class="contacts">
+  <p class="lead"><%= contacts.tagline %></p>
+  <dl class="specs">
+    <div><dt>Телефон</dt><dd><%= contacts.phone %></dd></div>
+    <div><dt>Email</dt><dd><%= contacts.email %></dd></div>
+    <div><dt>Адрес</dt><dd><%= contacts.address %></dd></div>
+    <div><dt>Часы работы</dt><dd><%= contacts.work_hours %></dd></div>
+  </dl>
+  <h2 class="section__title">Реквизиты</h2>
+  <dl class="specs">
+    <div><dt>Продавец</dt><dd><%= contacts.requisites.legal_name %></dd></div>
+    <div><dt>ИНН</dt><dd><%= contacts.requisites.inn %></dd></div>
+  </dl>
+</div>
+<%- include('partials/footer') %>

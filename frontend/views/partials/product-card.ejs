@@ -1,0 +1,28 @@
+<article class="card">
+  <a class="card__image" href="/product/<%= item.slug %>">
+    <% if (item.image) { %>
+      <img src="<%= item.image %>" alt="<%= item.name %>">
+    <% } else { %>
+      <span class="card__mark"><%= item.name.charAt(0) %></span>
+    <% } %>
+    <% if (Number(item.discount) > 0) { %><span class="card__sale">−<%= Math.round(item.discount) %>%</span><% } %>
+  </a>
+  <div class="card__body">
+    <span class="card__cat"><%= item.category.name %></span>
+    <a class="card__title" href="/product/<%= item.slug %>"><%= item.name %></a>
+    <p class="card__meta"><%= item.material %><%= item.size ? ' · ' + item.size : '' %></p>
+    <div class="card__foot">
+      <div class="prices">
+        <span class="price"><%= price(item.sell_price) %></span>
+        <% if (Number(item.discount) > 0) { %><s class="price price--old"><%= price(item.price) %></s><% } %>
+      </div>
+      <form action="/cart/add" method="post">
+        <input type="hidden" name="product_id" value="<%= item.id %>">
+        <input type="hidden" name="next" value="<%= currentPath %>">
+        <button class="btn btn--small" <%= item.quantity ? '' : 'disabled' %>>
+          <%= item.quantity ? 'В корзину' : 'Нет в наличии' %>
+        </button>
+      </form>
+    </div>
+  </div>
+</article>

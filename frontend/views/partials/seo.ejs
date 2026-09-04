@@ -1,0 +1,24 @@
+<%
+/* Описание страницы для выдачи и превью ссылки. Страница может передать свои
+   description и ogTitle через res.render, иначе берутся значения по умолчанию. */
+const pageDescription = typeof description !== "undefined" && description
+  ? description
+  : "Украшения для пирсинга из титана G23 и хирургической стали 316L: серьги для носа, лабреты, штанги, туннели. Доставка по России.";
+const pageOgTitle = typeof ogTitle !== "undefined" && ogTitle ? ogTitle : `${title} — ${shopName}`;
+const canonical = siteUrl + (canonicalPath || currentPath);
+%>
+<% if (typeof noindex !== "undefined" && noindex) { %>
+<meta name="robots" content="noindex">
+<% } else { %>
+<meta name="description" content="<%= pageDescription %>">
+<link rel="canonical" href="<%= canonical %>">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="<%= shopName %>">
+<meta property="og:title" content="<%= pageOgTitle %>">
+<meta property="og:description" content="<%= pageDescription %>">
+<meta property="og:url" content="<%= canonical %>">
+<meta name="twitter:card" content="summary">
+<% } %>
+<% if (yandexVerification) { %><meta name="yandex-verification" content="<%= yandexVerification %>"><% } %>
+<% if (googleVerification) { %><meta name="google-site-verification" content="<%= googleVerification %>"><% } %>

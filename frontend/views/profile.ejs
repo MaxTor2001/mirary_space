@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<div class="auth">
+  <h1 class="page-title">Профиль</h1>
+  <% if (saved) { %><div class="flash flash--success">Данные сохранены</div><% } %>
+  <form class="form" action="/profile" method="post">
+    <label>Логин<input class="input" value="<%= profile.username %>" disabled></label>
+    <div class="form__row">
+      <label>Имя<input class="input" name="first_name" value="<%= profile.first_name %>"></label>
+      <label>Фамилия<input class="input" name="last_name" value="<%= profile.last_name %>"></label>
+    </div>
+    <label>Email<input class="input" type="email" name="email" value="<%= profile.email %>"></label>
+    <label>Телефон<input class="input" name="phone" value="<%= profile.phone %>"></label>
+    <button class="btn">Сохранить</button>
+  </form>
+</div>
+<%- include('partials/footer') %>

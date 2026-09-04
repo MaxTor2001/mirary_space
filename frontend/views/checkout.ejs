@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">Оформление заказа</h1>
+<% if (error) { %><div class="flash flash--error"><%= error %></div><% } %>
+
+<div class="checkout">
+  <form class="form" action="/orders/checkout" method="post">
+    <div class="form__row">
+      <label>Имя<input class="input" name="first_name" required value="<%= form.first_name || user.first_name || '' %>"></label>
+      <label>Фамилия<input class="input" name="last_name" required value="<%= form.last_name || user.last_name || '' %>"></label>
+    </div>
+    <div class="form__row">
+      <label>Телефон<input class="input" name="phone" required value="<%= form.phone || '' %>"></label>
+      <label>Email<input class="input" type="email" name="email" value="<%= form.email || user.email || '' %>"></label>
+    </div>
+    <label>Адрес доставки<textarea class="input" name="delivery_address" rows="3"><%= form.delivery_address || '' %></textarea></label>
+    <label class="check"><input type="checkbox" name="requires_delivery" checked> Нужна доставка</label>
+    <label class="check"><input type="checkbox" name="payment_on_get" checked> Оплата при получении</label>
+    <button class="btn">Подтвердить заказ</button>
+  </form>
+
+  <aside class="summary">
+    <h2>Ваш заказ</h2>
+    <% cart.items.forEach(function (item) { %>
+      <div class="summary__row"><span><%= item.product.name %> × <%= item.quantity %></span><span><%= price(item.products_price) %></span></div>
+    <% }) %>
+    <div class="summary__total"><span>Итого</span><strong><%= price(cart.total_price) %></strong></div>
+  </aside>
+</div>
+
+<%- include('partials/footer') %>

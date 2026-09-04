@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %> — <%= shopName %></title>
+  <%- include('seo') %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="container topbar__inner">
+    <a class="logo" href="/">Mirari<span>·</span></a>
+    <nav class="nav">
+      <a href="/catalog" class="<%= currentPath.startsWith('/catalog') ? 'is-active' : '' %>">Каталог</a>
+      <a href="/about" class="<%= currentPath === '/about' ? 'is-active' : '' %>">О магазине</a>
+      <a href="/delivery" class="<%= currentPath === '/delivery' ? 'is-active' : '' %>">Доставка</a>
+      <a href="/contacts" class="<%= currentPath === '/contacts' ? 'is-active' : '' %>">Контакты</a>
+      <% if (user) { %>
+        <a href="/orders">Заказы</a>
+        <a href="/profile"><%= user.username %></a>
+        <form action="/logout" method="post" class="inline"><button class="link">Выйти</button></form>
+      <% } else { %>
+        <a href="/login">Вход</a>
+        <a href="/register">Регистрация</a>
+      <% } %>
+      <a class="cart-link" href="/cart">Корзина<% if (cartCount) { %><span class="badge"><%= cartCount %></span><% } %></a>
+    </nav>
+  </div>
+</header>
+<main class="container">
+<% if (flash) { %>
+  <div class="flash flash--<%= flash.type %>"><%= flash.text %></div>
+<% } %>

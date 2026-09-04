@@ -1,0 +1,40 @@
+<%- include('partials/header') %>
+
+<section class="hero">
+  <div class="hero__text">
+    <p class="eyebrow">Mirari</p>
+    <h1>Украшения для пирсинга, которым доверяют мастера</h1>
+    <p class="lead">Титан G23 и хирургическая сталь 316L: гипоаллергенно, безопасно для свежих проколов.</p>
+    <a class="btn" href="/catalog">Смотреть каталог</a>
+  </div>
+  <div class="hero__banners">
+    <% banners.forEach(function (banner) { %>
+      <a class="banner" href="<%= banner.link || '/catalog' %>">
+        <strong><%= banner.title %></strong>
+        <span><%= banner.subtitle %></span>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Категории</h2>
+  <div class="chips">
+    <% categories.forEach(function (category) { %>
+      <a class="chip" href="/catalog?category=<%= category.slug %>">
+        <%= category.name %><span><%= category.products_count %></span>
+      </a>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Новинки</h2>
+  <div class="grid">
+    <% novelties.forEach(function (item) { %>
+      <%- include('partials/product-card', { item: item }) %>
+    <% }) %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

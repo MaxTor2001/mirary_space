@@ -1,0 +1,31 @@
+<%- include('partials/header') %>
+<h1 class="page-title">О магазине Mirari</h1>
+<p class="lead">Качественные украшения для пирсинга</p>
+
+<section class="section">
+  <h2 class="section__title"><%= about.story.title %></h2>
+  <p><%= about.story.text %></p>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Почему выбирают нас</h2>
+  <div class="grid">
+    <% about.advantages.forEach((item) => { %>
+      <article class="card">
+        <div class="card__body">
+          <h3 class="card__title"><%= item.title %></h3>
+          <p class="card__meta"><%= item.description %></p>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+<section class="section">
+  <h2 class="section__title">Реквизиты</h2>
+  <dl class="specs">
+    <div><dt>Продавец</dt><dd><%= about.requisites.legal_name %></dd></div>
+    <div><dt>ИНН</dt><dd><%= about.requisites.inn %></dd></div>
+  </dl>
+</section>
+<%- include('partials/footer') %>

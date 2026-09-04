@@ -1,0 +1,21 @@
+# Продакшен-оверлей: docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+# Наружу смотрит только витрина (SHOP_PUBLIC_PORT), БД и API доступны лишь внутри хоста.
+services:
+  db:
+    ports: !override []
+    restart: unless-stopped
+
+  backend:
+    environment:
+      DJANGO_DEBUG: "0"
+      DJANGO_ADMIN_PASSWORD: ${DJANGO_ADMIN_PASSWORD:?требуется пароль администратора}
+    ports: !override
+      - "127.0.0.1:${BACKEND_PORT:-8000}:8000"
+    restart: unless-stopped
+
+  frontend:
+    environment:
+      SECURE_COOKIES: ${SECURE_COOKIES:-0}
+    ports: !override
+      - "${SHOP_BIND:-0.0.0.0}:${SHOP_PUBLIC_PORT:-8080}:3000"
+    restart: unless-stopped

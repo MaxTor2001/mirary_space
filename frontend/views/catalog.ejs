@@ -1,0 +1,43 @@
+<%- include('partials/header') %>
+
+<h1 class="page-title">Каталог</h1>
+
+<form class="filters" method="get" action="/catalog">
+  <input class="input" type="search" name="search" placeholder="Поиск по каталогу" value="<%= filters.search %>">
+  <select class="input" name="category">
+    <option value="">Все категории</option>
+    <% categories.forEach(function (category) { %>
+      <option value="<%= category.slug %>" <%= filters.category === category.slug ? 'selected' : '' %>><%= category.name %></option>
+    <% }) %>
+  </select>
+  <select class="input" name="ordering">
+    <option value="">Без сортировки</option>
+    <option value="price" <%= filters.ordering === 'price' ? 'selected' : '' %>>Сначала дешёвые</option>
+    <option value="-price" <%= filters.ordering === '-price' ? 'selected' : '' %>>Сначала дорогие</option>
+    <option value="name" <%= filters.ordering === 'name' ? 'selected' : '' %>>По названию</option>
+  </select>
+  <button class="btn">Показать</button>
+</form>
+
+<p class="muted">Найдено товаров: <%= products.count %></p>
+
+<div class="grid">
+  <% products.results.forEach(function (item) { %>
+    <%- include('partials/product-card', { item: item }) %>
+  <% }) %>
+</div>
+
+<% if (!products.results.length) { %>
+  <p class="empty">Ничего не найдено. Попробуйте изменить фильтры.</p>
+<% } %>
+
+<nav class="pager">
+  <% if (products.previous) { %>
+    <a class="btn btn--ghost" href="/catalog?<%= new URLSearchParams({ ...filters, page: page - 1 }) %>">Назад</a>
+  <% } %>
+  <% if (products.next) { %>
+    <a class="btn btn--ghost" href="/catalog?<%= new URLSearchParams({ ...filters, page: page + 1 }) %>">Вперёд</a>
+  <% } %>
+</nav>
+
+<%- include('partials/footer') %>

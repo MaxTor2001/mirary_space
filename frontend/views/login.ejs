@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+<div class="auth">
+  <h1 class="page-title">Вход</h1>
+  <% if (error) { %><div class="flash flash--error"><%= error %></div><% } %>
+  <form class="form" action="/login" method="post">
+    <label>Логин<input class="input" name="username" required value="<%= form.username || '' %>"></label>
+    <label>Пароль<input class="input" type="password" name="password" required></label>
+    <button class="btn">Войти</button>
+  </form>
+  <p class="muted">Нет аккаунта? <a href="/register">Зарегистрируйтесь</a></p>
+</div>
+<%- include('partials/footer') %>

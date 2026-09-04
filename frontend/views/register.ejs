@@ -1,0 +1,18 @@
+<%- include('partials/header') %>
+<div class="auth">
+  <h1 class="page-title">Регистрация</h1>
+  <% if (error) { %><div class="flash flash--error"><%= error %></div><% } %>
+  <form class="form" action="/register" method="post">
+    <label>Логин<input class="input" name="username" required value="<%= form.username || '' %>"></label>
+    <label>Email<input class="input" type="email" name="email" required value="<%= form.email || '' %>"></label>
+    <div class="form__row">
+      <label>Имя<input class="input" name="first_name" value="<%= form.first_name || '' %>"></label>
+      <label>Фамилия<input class="input" name="last_name" value="<%= form.last_name || '' %>"></label>
+    </div>
+    <label>Телефон<input class="input" name="phone" value="<%= form.phone || '' %>"></label>
+    <label>Пароль<input class="input" type="password" name="password" required minlength="6"></label>
+    <button class="btn">Создать аккаунт</button>
+  </form>
+  <p class="muted">Уже есть аккаунт? <a href="/login">Войти</a></p>
+</div>
+<%- include('partials/footer') %>
