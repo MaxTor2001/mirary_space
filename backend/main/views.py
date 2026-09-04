@@ -7,13 +7,19 @@ from rest_framework.response import Response
 from goods.models import Category, Product
 from goods.serializers import CategorySerializer, ProductSerializer
 
+from .legal import offer, privacy
 from .models import Banner
 from .serializers import BannerSerializer
 
 REQUISITES = {
     "legal_name": os.environ.get("SHOP_LEGAL_NAME", "ИП Канищева Екатерина Владимировна"),
     "inn": os.environ.get("SHOP_INN", "745110010453"),
+    "ogrnip": os.environ.get("SHOP_OGRNIP", ""),
+    "address": os.environ.get("SHOP_ADDRESS", ""),
+    "email": os.environ.get("SHOP_EMAIL", "hello@mirari.shop"),
+    "phone": os.environ.get("SHOP_PHONE", "+7 (999) 123-45-67"),
 }
+LEGAL_UPDATED = os.environ.get("SHOP_LEGAL_UPDATED", "4 сентября 2026 года")
 
 CONTACTS = {
     "shop": "Mirari",
@@ -112,3 +118,15 @@ def about(request):
 def delivery(request):
     """Раздел «Доставка и оплата»."""
     return Response(DELIVERY)
+
+
+@api_view(["GET"])
+def offer_document(request):
+    """Публичная оферта интернет-магазина."""
+    return Response({**offer(REQUISITES, LEGAL_UPDATED), "requisites": REQUISITES})
+
+
+@api_view(["GET"])
+def privacy_document(request):
+    """Политика обработки персональных данных."""
+    return Response({**privacy(REQUISITES, LEGAL_UPDATED), "requisites": REQUISITES})

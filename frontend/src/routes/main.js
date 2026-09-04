@@ -25,4 +25,14 @@ router.get("/delivery", async (req, res) => {
   res.render("delivery", { title: "Доставка и оплата", delivery });
 });
 
+router.get("/offer", async (req, res) => {
+  const doc = await api("/offer/", { session: req.session });
+  res.render("legal", { title: doc.title, doc });
+});
+
+router.get("/privacy", async (req, res) => {
+  const doc = await api("/privacy/", { session: req.session });
+  res.render("legal", { title: doc.title, doc });
+});
+
 export default router;

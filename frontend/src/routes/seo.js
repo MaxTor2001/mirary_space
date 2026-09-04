@@ -40,6 +40,8 @@ router.get("/sitemap.xml", async (req, res) => {
     { loc: "/about", priority: "0.4", changefreq: "yearly" },
     { loc: "/delivery", priority: "0.5", changefreq: "yearly" },
     { loc: "/contacts", priority: "0.4", changefreq: "yearly" },
+    { loc: "/offer", priority: "0.2", changefreq: "yearly" },
+    { loc: "/privacy", priority: "0.2", changefreq: "yearly" },
     ...categories.map((c) => ({
       loc: `/catalog?category=${encodeURIComponent(c.slug)}`,
       priority: "0.7",

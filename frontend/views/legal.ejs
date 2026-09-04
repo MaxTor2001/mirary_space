@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+<article class="legal">
+  <h1 class="page-title"><%= doc.title %></h1>
+  <p class="muted">Редакция от <%= doc.updated %></p>
+  <p class="lead"><%= doc.intro %></p>
+
+  <% doc.sections.forEach((section) => { %>
+    <section class="legal__section">
+      <h2><%= section.title %></h2>
+      <% if (section.items.length) { %>
+        <ul class="legal__list">
+          <% section.items.forEach((item) => { %><li><%= item %></li><% }) %>
+        </ul>
+      <% } %>
+      <% if (section.requisites) { %>
+        <dl class="specs">
+          <div><dt>Наименование</dt><dd><%= doc.requisites.legal_name %></dd></div>
+          <div><dt>ИНН</dt><dd><%= doc.requisites.inn %></dd></div>
+          <% if (doc.requisites.ogrnip) { %><div><dt>ОГРНИП</dt><dd><%= doc.requisites.ogrnip %></dd></div><% } %>
+          <% if (doc.requisites.address) { %><div><dt>Адрес</dt><dd><%= doc.requisites.address %></dd></div><% } %>
+          <div><dt>Электронная почта</dt><dd><%= doc.requisites.email %></dd></div>
+          <div><dt>Телефон</dt><dd><%= doc.requisites.phone %></dd></div>
+        </dl>
+      <% } %>
+    </section>
+  <% }) %>
+</article>
+<%- include('partials/footer') %>

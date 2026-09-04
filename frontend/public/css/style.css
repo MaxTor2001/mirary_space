@@ -172,6 +172,17 @@ h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-
 .specs dt { color: var(--muted); }
 .specs dd { margin: 0; }
 
+/* Юридические страницы */
+.legal { max-width: 68ch; }
+.legal .lead { margin-bottom: 2rem; }
+.legal__section { margin: 2rem 0; }
+.legal__section h2 { font-size: 1.3rem; margin: 0 0 0.75rem; }
+.legal__list { margin: 0; padding-left: 1.1rem; color: var(--muted); display: grid; gap: 0.6rem; }
+.legal__list li { line-height: 1.7; }
+.footer__links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.checkout__terms { color: var(--muted); font-size: 0.85rem; margin: 0.9rem 0 0; }
+.checkout__terms a { text-decoration: underline; }
+
 /* Таблицы */
 .table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
 .table th, .table td { text-align: left; padding: 0.85rem 0.6rem; border-bottom: 1px solid var(--line); }
