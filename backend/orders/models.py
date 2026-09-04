@@ -55,6 +55,8 @@ class OrderItem(models.Model):
         Product, on_delete=models.SET_NULL, null=True, verbose_name="Товар"
     )
     name = models.CharField("Название", max_length=200)
+    thickness = models.DecimalField("Толщина, мм", max_digits=4, decimal_places=1, null=True, blank=True)
+    length = models.DecimalField("Длина, мм", max_digits=4, decimal_places=1, null=True, blank=True)
     price = models.DecimalField("Цена", max_digits=10, decimal_places=2)
     quantity = models.PositiveIntegerField("Количество", default=1)
 

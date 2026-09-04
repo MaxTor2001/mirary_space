@@ -10,7 +10,7 @@
   <thead><tr><th>Товар</th><th>Цена</th><th>Количество</th><th>Сумма</th></tr></thead>
   <tbody>
     <% order.items.forEach(function (item) { %>
-      <tr><td><%= item.name %></td><td><%= price(item.price) %></td><td><%= item.quantity %></td><td><%= price(item.products_price) %></td></tr>
+      <tr><td><%= item.name %><% if (chosen(item)) { %> (<%= chosen(item) %> мм)<% } %></td><td><%= price(item.price) %></td><td><%= item.quantity %></td><td><%= price(item.products_price) %></td></tr>
     <% }) %>
   </tbody>
 </table>

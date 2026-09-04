@@ -65,6 +65,9 @@ app.use(async (req, res, next) => {
   // Размеры приходят списком строк («1.2», «10.0») — показываем через косую черту.
   res.locals.sizes = (values) =>
     (values || []).map(Number).join(" / ");
+  // Выбранные покупателем размеры позиции: «1.2 × 8 мм».
+  res.locals.chosen = (item) =>
+    [item.thickness, item.length].filter(Boolean).map(Number).join(" \u00d7 ");
   req.session.flash = null;
 
   try {

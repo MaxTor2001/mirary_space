@@ -22,7 +22,7 @@
   <aside class="summary">
     <h2>Ваш заказ</h2>
     <% cart.items.forEach(function (item) { %>
-      <div class="summary__row"><span><%= item.product.name %> × <%= item.quantity %></span><span><%= price(item.products_price) %></span></div>
+      <div class="summary__row"><span><%= item.product.name %><% if (chosen(item)) { %> (<%= chosen(item) %> мм)<% } %> × <%= item.quantity %></span><span><%= price(item.products_price) %></span></div>
     <% }) %>
     <div class="summary__total"><span>Итого</span><strong><%= price(cart.total_price) %></strong></div>
   </aside>

@@ -14,7 +14,12 @@ router.post("/add", async (req, res) => {
   await api("/carts/", {
     method: "POST",
     session: req.session,
-    body: { product_id: Number(req.body.product_id), quantity: Number(req.body.quantity || 1) },
+    body: {
+      product_id: Number(req.body.product_id),
+      quantity: Number(req.body.quantity || 1),
+      thickness: req.body.thickness || null,
+      length: req.body.length || null,
+    },
   });
   req.session.flash = { type: "success", text: "Товар добавлен в корзину" };
   res.redirect(req.body.next || "/cart");

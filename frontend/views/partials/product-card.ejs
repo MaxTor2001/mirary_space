@@ -16,13 +16,17 @@
         <span class="price"><%= price(item.sell_price) %></span>
         <% if (Number(item.discount) > 0) { %><s class="price price--old"><%= price(item.price) %></s><% } %>
       </div>
-      <form action="/cart/add" method="post">
-        <input type="hidden" name="product_id" value="<%= item.id %>">
-        <input type="hidden" name="next" value="<%= currentPath %>">
-        <button class="btn btn--small" <%= item.quantity ? '' : 'disabled' %>>
-          <%= item.quantity ? 'В корзину' : 'Нет в наличии' %>
-        </button>
-      </form>
+      <% if (item.quantity && (item.thicknesses.length || item.lengths.length)) { %>
+        <a class="btn btn--small" href="/product/<%= item.slug %>">Выбрать размер</a>
+      <% } else { %>
+        <form action="/cart/add" method="post">
+          <input type="hidden" name="product_id" value="<%= item.id %>">
+          <input type="hidden" name="next" value="<%= currentPath %>">
+          <button class="btn btn--small" <%= item.quantity ? '' : 'disabled' %>>
+            <%= item.quantity ? 'В корзину' : 'Нет в наличии' %>
+          </button>
+        </form>
+      <% } %>
     </div>
   </div>
 </article>

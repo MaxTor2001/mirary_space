@@ -37,6 +37,8 @@ class OrderViewSet(
                 order=order,
                 product=product,
                 name=product.name,
+                thickness=item.thickness,
+                length=item.length,
                 price=product.sell_price,
                 quantity=item.quantity,
             )

@@ -8,7 +8,7 @@ from goods.models import Product
 
 from .models import Cart
 from .serializers import CartSerializer, CartWriteSerializer
-from .services import cart_items, cart_owner
+from .services import cart_items, cart_owner, chosen_size
 
 
 class CartViewSet(viewsets.ModelViewSet):
@@ -34,9 +34,14 @@ class CartViewSet(viewsets.ModelViewSet):
         payload = CartWriteSerializer(data=request.data)
         payload.is_valid(raise_exception=True)
         product = get_object_or_404(Product, pk=payload.validated_data["product_id"])
+        thickness = chosen_size(
+            payload.validated_data.get("thickness"), product.thicknesses, "thickness"
+        )
+        length = chosen_size(payload.validated_data.get("length"), product.lengths, "length")
 
         item, created = Cart.objects.get_or_create(
-            product=product, defaults={"quantity": 0}, **cart_owner(request)
+            product=product, thickness=thickness, length=length,
+            defaults={"quantity": 0}, **cart_owner(request)
         )
         item.quantity += payload.validated_data["quantity"]
         item.save(update_fields=["quantity"])
@@ -67,7 +72,9 @@ class CartViewSet(viewsets.ModelViewSet):
 
         for guest_item in Cart.objects.filter(user__isnull=True, session_key=session_key):
             item, _ = Cart.objects.get_or_create(
-                user=request.user, product=guest_item.product, defaults={"quantity": 0}
+                user=request.user, product=guest_item.product,
+                thickness=guest_item.thickness, length=guest_item.length,
+                defaults={"quantity": 0},
             )
             item.quantity += guest_item.quantity
             item.save(update_fields=["quantity"])

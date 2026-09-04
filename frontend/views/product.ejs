@@ -35,6 +35,24 @@
     <form class="product__buy" action="/cart/add" method="post">
       <input type="hidden" name="product_id" value="<%= product.id %>">
       <input type="hidden" name="next" value="/product/<%= product.slug %>">
+      <% if (product.thicknesses.length) { %>
+        <label class="product__choice">Толщина
+          <select class="input" name="thickness" required>
+            <% product.thicknesses.forEach((value) => { %>
+              <option value="<%= value %>"><%= Number(value) %> мм</option>
+            <% }) %>
+          </select>
+        </label>
+      <% } %>
+      <% if (product.lengths.length) { %>
+        <label class="product__choice">Длина
+          <select class="input" name="length" required>
+            <% product.lengths.forEach((value) => { %>
+              <option value="<%= value %>"><%= Number(value) %> мм</option>
+            <% }) %>
+          </select>
+        </label>
+      <% } %>
       <input class="input input--qty" type="number" name="quantity" value="1" min="1" max="<%= product.quantity || 1 %>">
       <button class="btn" <%= product.quantity ? '' : 'disabled' %>>В корзину</button>
     </form>
