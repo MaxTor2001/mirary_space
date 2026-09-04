@@ -114,5 +114,11 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 12,
 }
 
+if not DEBUG:
+    # За nginx: без этого Django считает запрос http, и secure-куки не работают.
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_HEADERS = [*default_headers, "x-cart-session"]

@@ -1,0 +1,19 @@
+# Секреты и локальные настройки
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+backend/staticfiles/
+backend/media/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Прочее
+.DS_Store
+*.swp

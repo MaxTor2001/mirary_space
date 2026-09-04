@@ -1,16 +1,12 @@
-# Витрина Mirari за nginx. Установка на сервере:
-#   sudo cp mirari.conf /etc/nginx/sites-available/mirari.conf
-#   sudo sed -i 's/SHOP_DOMAIN/ваш-домен.ru/g' /etc/nginx/sites-available/mirari.conf
-#   sudo ln -s /etc/nginx/sites-available/mirari.conf /etc/nginx/sites-enabled/
-#   sudo nginx -t && sudo systemctl reload nginx
-#   sudo certbot --nginx -d ваш-домен.ru -d www.ваш-домен.ru
+# Витрина Mirari за nginx.
+#   / .............. витрина Express (127.0.0.1:8080)
+#   /admin/ ........ админка Django (127.0.0.1:8000)
+#   /static/ ....... статика Django, нужна админке (её раздаёт whitenoise)
 #
-# Блок именной (server_name), без default_server — конфиги соседних сайтов
-# на этом же nginx не затрагиваются, certbot допишет ssl только в этот файл.
+# Блок именной (server_name), без default_server — конфиг соседнего сайта
+# на этом же nginx не затрагивается.
 server {
-    listen 80;
-    listen [::]:80;
-    server_name SHOP_DOMAIN www.SHOP_DOMAIN;
+    server_name mirari.space www.mirari.space;
 
     client_max_body_size 10M;
 
@@ -22,4 +18,42 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
+
+    location /admin/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /static/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/mirari.space/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/mirari.space/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+}
+
+server {
+    if ($host = www.mirari.space) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    if ($host = mirari.space) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+    listen 80;
+    listen [::]:80;
+    server_name mirari.space www.mirari.space;
+    return 404; # managed by Certbot
 }
