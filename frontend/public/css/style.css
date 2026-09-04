@@ -37,7 +37,8 @@ a:hover { color: var(--accent); }
   z-index: 10;
 }
 .topbar__inner { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1rem 0; }
-.logo { font-family: "Cormorant Garamond", serif; font-size: 1.8rem; letter-spacing: 0.08em; }
+.logo { display: inline-flex; align-items: center; gap: 0.55rem; font-family: "Cormorant Garamond", serif; font-size: 1.8rem; letter-spacing: 0.08em; }
+.logo img { display: block; }
 .logo span { color: var(--accent); }
 .nav { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; font-size: 0.94rem; }
 .nav .is-active { color: var(--accent); }
@@ -55,12 +56,22 @@ h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-
 .empty { color: var(--muted); padding: 2rem 0; }
 
 /* Главная */
-.hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 2rem; padding: 3.5rem 0 1rem; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); gap: 2rem; padding: 3.5rem 0 1rem; }
 .hero h1 { font-size: 3rem; line-height: 1.1; margin: 0.6rem 0 1rem; max-width: 16ch; }
-.hero__banners { display: grid; gap: 1rem; align-content: center; }
+.hero__stage { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 1.5rem; }
+.hero__art { width: min(300px, 34vw); height: auto; }
+.hero__aside { display: grid; gap: 1rem; align-content: center; }
+.hero__note {
+  background: linear-gradient(150deg, rgba(200, 169, 106, 0.12), rgba(29, 32, 39, 0.9));
+  border: 1px solid rgba(200, 169, 106, 0.28);
+  border-radius: 34px;
+  padding: 1.6rem 1.8rem;
+}
+.hero__note h2 { font-family: "Manrope", system-ui, sans-serif; font-weight: 700; font-size: 1.15rem; margin: 0 0 0.5rem; }
+.hero__note p { margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
 .banner {
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 28px;
   padding: 1.25rem;
   background: linear-gradient(140deg, var(--surface-2), var(--surface));
   display: grid;
@@ -192,8 +203,9 @@ h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-
 .footer__inner { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 
 @media (max-width: 860px) {
-  .hero, .product, .checkout { grid-template-columns: 1fr; }
-  .hero h1 { font-size: 2.2rem; }
+  .hero, .hero__stage, .product, .checkout { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 2.2rem; max-width: none; }
+  .hero__art { width: min(260px, 70vw); justify-self: center; }
   .form__row { grid-template-columns: 1fr; }
 }
 

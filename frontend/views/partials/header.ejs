@@ -8,12 +8,19 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta name="theme-color" content="#0e0f12">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <header class="topbar">
   <div class="container topbar__inner">
-    <a class="logo" href="/">Mirari<span>·</span></a>
+    <a class="logo" href="/">
+      <img src="/img/logo.svg" width="30" height="30" alt="">
+      Mirari<span>·</span>
+    </a>
     <nav class="nav">
       <a href="/catalog" class="<%= currentPath.startsWith('/catalog') ? 'is-active' : '' %>">Каталог</a>
       <a href="/about" class="<%= currentPath === '/about' ? 'is-active' : '' %>">О магазине</a>

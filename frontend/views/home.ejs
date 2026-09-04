@@ -1,13 +1,20 @@
 <%- include('partials/header') %>
 
 <section class="hero">
-  <div class="hero__text">
-    <p class="eyebrow">Mirari</p>
-    <h1>Украшения для пирсинга, которым доверяют мастера</h1>
-    <p class="lead">Титан G23 и хирургическая сталь 316L: гипоаллергенно, безопасно для свежих проколов.</p>
-    <a class="btn" href="/catalog">Смотреть каталог</a>
+  <div class="hero__stage">
+    <div class="hero__text">
+      <p class="eyebrow">Mirari</p>
+      <h1>Украшения для пирсинга, которым доверяют мастера</h1>
+      <p class="lead">Титан G23 и хирургическая сталь 316L: гипоаллергенно, безопасно для свежих проколов.</p>
+      <a class="btn" href="/catalog">Смотреть каталог</a>
+    </div>
+    <img class="hero__art" src="/img/hero-gold.svg" width="320" height="380" alt="" aria-hidden="true">
   </div>
-  <div class="hero__banners">
+  <div class="hero__aside">
+    <div class="hero__note">
+      <h2>Размер подбираете вы</h2>
+      <p>У каждого украшения указаны толщина и длина. Выберите свои миллиметры в карточке — в корзину уйдёт именно та штанга, что нужна вашему проколу.</p>
+    </div>
     <% banners.forEach(function (banner) { %>
       <a class="banner" href="<%= banner.link || '/catalog' %>">
         <strong><%= banner.title %></strong>
