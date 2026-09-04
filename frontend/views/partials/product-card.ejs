@@ -10,7 +10,7 @@
   <div class="card__body">
     <span class="card__cat"><%= item.category.name %></span>
     <a class="card__title" href="/product/<%= item.slug %>"><%= item.name %></a>
-    <p class="card__meta"><%= item.material %><%= item.size ? ' · ' + item.size : '' %></p>
+    <p class="card__meta"><%= [item.material, sizes(item.thicknesses) && sizes(item.thicknesses) + ' мм'].filter(Boolean).join(' · ') %></p>
     <div class="card__foot">
       <div class="prices">
         <span class="price"><%= price(item.sell_price) %></span>

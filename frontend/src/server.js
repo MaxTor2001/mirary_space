@@ -62,6 +62,9 @@ app.use(async (req, res, next) => {
   res.locals.currentPath = req.path;
   res.locals.price = (value) =>
     `${Number(value).toLocaleString("ru-RU", { maximumFractionDigits: 2 })} \u20bd`;
+  // Размеры приходят списком строк («1.2», «10.0») — показываем через косую черту.
+  res.locals.sizes = (values) =>
+    (values || []).map(Number).join(" / ");
   req.session.flash = null;
 
   try {

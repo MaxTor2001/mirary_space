@@ -19,6 +19,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(read_only=True)
+    thread_display = serializers.CharField(source="get_thread_display", read_only=True)
     sell_price = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
     image = serializers.SerializerMethodField()
     thumbnail = serializers.SerializerMethodField()
@@ -34,6 +35,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = (
-            "id", "name", "slug", "description", "material", "size",
+            "id", "name", "slug", "description", "material",
+            "thicknesses", "lengths", "thread", "thread_display",
             "price", "discount", "sell_price", "quantity", "image", "thumbnail", "category",
         )

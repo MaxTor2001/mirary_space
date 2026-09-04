@@ -1,6 +1,7 @@
 """Каталог: категории и товары для пирсинга."""
 from decimal import Decimal
 
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from slugify import slugify
 
@@ -26,6 +27,12 @@ class Category(models.Model):
 class Product(models.Model):
     """Товар каталога с ценой, скидкой и остатком на складе."""
 
+    THREADS = [
+        ("internal", "Внутренняя резьба"),
+        ("external", "Внешняя резьба"),
+        ("threadless", "Безрезьбовое (push-in)"),
+    ]
+
     name = models.CharField("Название", max_length=200)
     slug = models.SlugField(
         "URL", max_length=250, unique=True, blank=True,
@@ -33,7 +40,17 @@ class Product(models.Model):
     )
     description = models.TextField("Описание", blank=True)
     material = models.CharField("Материал", max_length=100, blank=True)
-    size = models.CharField("Размер", max_length=50, blank=True)
+    thicknesses = ArrayField(
+        models.DecimalField(max_digits=4, decimal_places=1),
+        verbose_name="Толщина, мм", blank=True, default=list,
+        help_text="Несколько значений — через запятую: 1.2, 1.6",
+    )
+    lengths = ArrayField(
+        models.DecimalField(max_digits=4, decimal_places=1),
+        verbose_name="Длина, мм", blank=True, default=list,
+        help_text="Несколько значений — через запятую: 6, 8, 10",
+    )
+    thread = models.CharField("Тип резьбы", max_length=20, choices=THREADS, blank=True)
     price = models.DecimalField("Цена", max_digits=10, decimal_places=2)
     discount = models.DecimalField("Скидка, %", max_digits=5, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField("Остаток", default=0)

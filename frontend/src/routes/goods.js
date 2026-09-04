@@ -36,12 +36,15 @@ router.get("/product/:slug", async (req, res) => {
   const product = await api(`/goods/products/${req.params.slug}/`, { session: req.session });
   // В каталоге прочерк означает «не указано» — в описание для выдачи он не годится.
   const material = product.material === "—" ? "" : product.material;
-  const size = product.size === "—" ? "" : product.size;
+  const size = [product.thicknesses, product.lengths]
+    .map((values) => values.map(Number).join("/"))
+    .filter(Boolean)
+    .join("x");
   res.render("product", {
     title: product.name,
     product,
     canonicalPath: `/product/${product.slug}`,
-    description: [product.name, material, size].filter(Boolean).join(", ") +
+    description: [product.name, material, size && `${size} мм`].filter(Boolean).join(", ") +
       ". Купить в интернет-магазине Mirari с доставкой по России.",
   });
 });

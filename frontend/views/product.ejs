@@ -20,7 +20,15 @@
     </div>
     <dl class="specs">
       <div><dt>Материал</dt><dd><%= product.material || '—' %></dd></div>
-      <div><dt>Размер</dt><dd><%= product.size || '—' %></dd></div>
+      <% if (product.thicknesses.length) { %>
+        <div><dt>Толщина</dt><dd><%= sizes(product.thicknesses) %> мм</dd></div>
+      <% } %>
+      <% if (product.lengths.length) { %>
+        <div><dt>Длина</dt><dd><%= sizes(product.lengths) %> мм</dd></div>
+      <% } %>
+      <% if (product.thread) { %>
+        <div><dt>Резьба</dt><dd><%= product.thread_display %></dd></div>
+      <% } %>
       <div><dt>Наличие</dt><dd><%= product.quantity ? product.quantity + ' шт' : 'нет в наличии' %></dd></div>
     </dl>
     <p class="product__description"><%= product.description %></p>
