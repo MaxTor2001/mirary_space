@@ -8,6 +8,11 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+# Какие compose-файлы читать, задаёт COMPOSE_FILE в .env. Без него docker compose
+# возьмёт только базовый файл и поднимет dev-конфигурацию: Postgres наружу,
+# витрина не на том порту. Лучше остановиться здесь, чем выкатить это на прод.
+grep -q '^COMPOSE_FILE=' .env || { echo "В .env нет COMPOSE_FILE — выкатка остановлена"; exit 1; }
+
 echo "== было =="
 git log --oneline -1
 
@@ -17,7 +22,7 @@ git reset --hard origin/main
 echo "== стало =="
 git log --oneline -1
 
-docker compose -f docker-compose.yml -f docker-compose.prod.yml -p mirari up -d --build
+docker compose up -d --build
 
 echo "== проверка =="
 sleep 8
