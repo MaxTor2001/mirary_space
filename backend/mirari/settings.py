@@ -97,6 +97,10 @@ STORAGES = {
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+# Публичный адрес картинок. Витрина ходит в API по внутреннему имени backend:8000,
+# и адрес, построенный от запроса, браузер открыть не сможет — поэтому задаётся явно.
+PUBLIC_MEDIA_URL = os.environ.get("PUBLIC_MEDIA_URL", "http://localhost:8000/media/").rstrip("/") + "/"
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {

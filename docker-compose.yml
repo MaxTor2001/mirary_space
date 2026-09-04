@@ -31,6 +31,7 @@ services:
       POSTGRES_HOST: db
       POSTGRES_PORT: 5432
       SEED_DEMO: ${SEED_DEMO:-1}
+      PUBLIC_MEDIA_URL: ${PUBLIC_MEDIA_URL:-http://localhost:8000/media/}
       SHOP_LEGAL_NAME: ${SHOP_LEGAL_NAME:-ИП Канищева Екатерина Владимировна}
       SHOP_INN: ${SHOP_INN:-745110010453}
     volumes:
