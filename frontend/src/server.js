@@ -54,6 +54,7 @@ app.use(async (req, res, next) => {
   res.locals.shopName = "Mirari";
   res.locals.siteUrl = SITE_URL;
   res.locals.canonicalPath = null;
+  res.locals.adminUrl = process.env.ADMIN_URL || "";
   res.locals.metrikaId = process.env.YANDEX_METRIKA_ID || "";
   res.locals.yandexVerification = process.env.YANDEX_VERIFICATION || "";
   res.locals.googleVerification = process.env.GOOGLE_SITE_VERIFICATION || "";

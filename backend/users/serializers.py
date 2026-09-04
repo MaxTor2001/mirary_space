@@ -8,7 +8,10 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "last_name", "phone")
+        fields = ("id", "username", "email", "first_name", "last_name", "phone", "is_staff")
+        # is_staff только на чтение: этим же сериализатором обновляется профиль,
+        # и без запрета покупатель выписал бы себе доступ в админку.
+        read_only_fields = ("is_staff",)
 
 
 class RegisterSerializer(serializers.ModelSerializer):

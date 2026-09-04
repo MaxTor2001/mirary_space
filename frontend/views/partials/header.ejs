@@ -21,6 +21,9 @@
       <a href="/contacts" class="<%= currentPath === '/contacts' ? 'is-active' : '' %>">Контакты</a>
       <% if (user) { %>
         <a href="/orders">Заказы</a>
+        <% if (user.is_staff && adminUrl) { %>
+          <a href="<%= adminUrl %>" class="nav__admin">Админ-панель</a>
+        <% } %>
         <a href="/profile"><%= user.username %></a>
         <form action="/logout" method="post" class="inline"><button class="link">Выйти</button></form>
       <% } else { %>

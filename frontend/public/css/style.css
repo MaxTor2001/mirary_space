@@ -197,3 +197,5 @@ h1, h2, h3 { font-family: "Cormorant Garamond", serif; font-weight: 600; letter-
 /* Информационные страницы */
 .list { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: 0.5rem; }
 .list li { border-bottom: 1px dashed var(--line); padding-bottom: 0.4rem; }
+.nav__admin { border: 1px solid var(--accent); color: var(--accent); padding: 0.3rem 0.7rem; border-radius: 999px; }
+.nav__admin:hover { background: var(--accent-soft); }
