@@ -22,4 +22,5 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml -p mirari up -d 
 echo "== проверка =="
 sleep 8
 curl -sf -o /dev/null -w "витрина: %{http_code}\n" http://127.0.0.1:8080/
-curl -s -o /dev/null -w "админка: %{http_code}\n" http://127.0.0.1:8000/admin/
+ADMIN_PATH=$(grep '^DJANGO_ADMIN_PATH=' .env | cut -d= -f2)
+curl -s -o /dev/null -w "админка: %{http_code}\n" "http://127.0.0.1:8000/${ADMIN_PATH:-admin/}"
