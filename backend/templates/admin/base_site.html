@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block extrahead %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="{% static 'main/logo.svg' %}" type="image/svg+xml">
+{% endblock %}
+
+{% block extrastyle %}
+<link rel="stylesheet" href="{% static 'main/admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+  <a href="{% url 'admin:index' %}">
+    <img src="{% static 'main/logo.svg' %}" width="28" height="28" alt="">
+    Mirari<span>·</span>
+  </a>
+</div>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

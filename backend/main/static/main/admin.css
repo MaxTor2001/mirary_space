@@ -1,0 +1,202 @@
+/* Тема админки в стиле витрины: тёмный фон, золотой акцент, те же шрифты. */
+
+html[data-theme="light"],
+html[data-theme="dark"],
+:root {
+  --bg: #0e0f12;
+  --surface: #16181d;
+  --surface-2: #1d2027;
+  --line: #2a2e37;
+  --text: #e9eaee;
+  --muted: #9aa0ac;
+  --gold: #c8a96a;
+  --gold-soft: rgba(200, 169, 106, 0.14);
+  --danger: #e0655f;
+  --radius: 14px;
+
+  --primary: var(--surface-2);
+  --secondary: var(--surface);
+  --accent: var(--gold);
+  --primary-fg: var(--text);
+
+  --body-fg: var(--text);
+  --body-bg: var(--bg);
+  --body-quiet-color: var(--muted);
+  --body-medium-color: #c9cdd6;
+  --body-loud-color: #ffffff;
+
+  --header-color: var(--muted);
+  --header-branding-color: var(--gold);
+  --header-bg: var(--bg);
+  --header-link-color: var(--text);
+
+  --breadcrumbs-fg: var(--muted);
+  --breadcrumbs-link-fg: var(--text);
+  --breadcrumbs-bg: var(--surface);
+
+  --link-fg: var(--gold);
+  --link-hover-color: #e2c98f;
+  --link-selected-fg: var(--gold);
+
+  --hairline-color: var(--line);
+  --border-color: #3a3f4b;
+  --error-fg: var(--danger);
+
+  --message-debug-bg: var(--surface-2);
+  --message-debug-icon: url(../admin/img/icon-debug-dark.svg);
+  --message-info-bg: #1d2a3a;
+  --message-info-icon: url(../admin/img/icon-info-dark.svg);
+  --message-success-bg: #1e2f24;
+  --message-success-icon: url(../admin/img/icon-yes-dark.svg);
+  --message-warning-bg: #3a2e14;
+  --message-warning-icon: url(../admin/img/icon-alert-dark.svg);
+  --message-error-bg: #3a1d1d;
+  --message-error-icon: url(../admin/img/icon-no-dark.svg);
+
+  --darkened-bg: var(--surface);
+  --selected-bg: var(--surface-2);
+  --selected-row: var(--gold-soft);
+
+  --button-fg: var(--text);
+  --button-bg: var(--surface-2);
+  --button-hover-bg: var(--line);
+  --default-button-bg: var(--gold);
+  --default-button-hover-bg: #d7b97a;
+  --close-button-bg: var(--line);
+  --close-button-hover-bg: #3a3f4b;
+  --delete-button-bg: var(--danger);
+  --delete-button-hover-bg: #c9544e;
+
+  --object-tools-fg: var(--text);
+  --object-tools-bg: var(--surface-2);
+  --object-tools-hover-bg: var(--line);
+
+  --font-family-primary: "Manrope", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+body { font-size: 0.9rem; line-height: 1.5; }
+.theme-toggle { display: none; }
+
+/* Шапка */
+#header {
+  padding: 14px 40px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(14, 15, 18, 0.92);
+  backdrop-filter: blur(8px);
+}
+#site-name { font-family: "Cormorant Garamond", serif; font-size: 1.8rem; font-weight: 500; letter-spacing: 0.08em; margin: 0; }
+#site-name a { display: inline-flex; align-items: center; gap: 0.55rem; color: var(--text); }
+#site-name a span { color: var(--gold); }
+#site-name a:hover { color: var(--gold); }
+#user-tools { font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+#user-tools a, #logout-form button { border-bottom: none; color: var(--text); }
+#user-tools a:hover, #logout-form button:hover { color: var(--gold); border-bottom: none; }
+
+.breadcrumbs { padding: 12px 40px; font-size: 0.85rem; background: var(--bg); border-bottom: 1px solid var(--line); }
+
+/* Заголовки */
+#content h1 { font-family: "Cormorant Garamond", serif; font-size: 2.2rem; font-weight: 600; letter-spacing: 0.01em; margin: 0 0 1.25rem; color: var(--text); }
+#content > h2 { font-family: "Cormorant Garamond", serif; font-size: 1.5rem; font-weight: 600; }
+body #container a:not(.button) { text-decoration: none; }
+
+/* Блоки и таблицы */
+.module { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.module h2, .module caption, .inline-group h2, #changelist-filter h2 {
+  background: var(--surface-2);
+  color: var(--gold);
+  font-family: "Manrope", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  padding: 10px 14px;
+}
+.module caption a.section, .module caption a.section:link, .module caption a.section:visited { color: var(--gold); }
+thead th { background: var(--surface-2); color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; }
+thead th a:link, thead th a:visited { color: var(--muted); }
+.row1 { background: var(--surface); }
+.row2 { background: var(--bg); }
+td, th { border-bottom-color: var(--line); }
+#changelist.module { border: none; background: transparent; overflow: visible; }
+#changelist .results { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+#changelist .results table { border: none; }
+#changelist-filter { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+#changelist-filter li.selected { border-left-color: var(--gold); }
+#changelist-filter li.selected a { color: var(--gold); }
+#toolbar { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+#changelist .actions { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.paginator { border-bottom: none; }
+.paginator a:link, .paginator a:visited { border-radius: 999px; }
+.paginator .this-page { color: var(--gold); }
+
+/* Боковая навигация */
+#nav-sidebar { background: var(--bg); border-right: 1px solid var(--line); }
+#nav-sidebar .module { margin: 0 12px 14px; border: 1px solid var(--line); border-radius: 12px; }
+#nav-sidebar .module td, #nav-sidebar .module th { border-bottom: none; }
+#nav-sidebar .current-model { background: var(--gold-soft); }
+#nav-sidebar .current-app .section:link, #nav-sidebar .current-app .section:visited { color: var(--gold); }
+#nav-sidebar .current-model a { color: var(--gold); }
+#toggle-nav-sidebar { background: var(--surface); border-right: 1px solid var(--line); }
+#nav-filter { border-radius: 10px; }
+
+/* Формы */
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="number"],
+input[type="tel"], input[type="search"], textarea, select, .vTextField {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: var(--text);
+  font: inherit;
+}
+select { height: auto; padding: 7px 10px; }
+input:focus, textarea:focus, select:focus, .vTextField:focus { outline: none; border-color: var(--gold); }
+.aligned label { color: var(--muted); }
+.form-row { border-bottom-color: var(--line); }
+fieldset.module { padding-bottom: 10px; }
+.submit-row { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.help, div.help, .help_text { color: var(--muted); }
+.inline-related h3 { background: var(--surface-2); border-color: var(--line); color: var(--text); }
+.inline-group .tabular tr.add-row td { background: var(--surface); border-top: 1px solid var(--line); }
+
+/* Кнопки */
+.button, input[type="submit"], input[type="button"], .submit-row input, a.button, .object-tools a:link, .object-tools a:visited {
+  border-radius: 999px;
+  font-weight: 700;
+  font-family: "Manrope", system-ui, sans-serif;
+}
+.button.default, input[type="submit"].default, .submit-row input.default { color: #14151a; }
+.button.default:hover, input[type="submit"].default:hover, .submit-row input.default:hover { color: #14151a; }
+.object-tools a.addlink, .object-tools a.addlink:link { background: var(--gold); color: #14151a; }
+.object-tools a.addlink:hover { background: var(--default-button-hover-bg); color: #14151a; }
+.deletelink, .submit-row a.deletelink { border-radius: 999px; }
+
+/* Сообщения */
+ul.messagelist li { color: var(--text); border-radius: 10px; margin-bottom: 8px; }
+.errornote { background: var(--message-error-bg); border-color: var(--danger); color: var(--text); border-radius: 10px; }
+.errorlist li { background: var(--message-error-bg); border-radius: 8px; }
+
+/* Главная страница админки */
+.dashboard #content { width: min(900px, 100%); }
+.dashboard .module table td, .dashboard .module table th { padding: 10px 14px; }
+.dashboard .module table th a { color: var(--text); font-weight: 500; }
+.dashboard .module table th a:hover { color: var(--gold); }
+#content-related .module { background: var(--surface); }
+#content-related .module h2 { font-family: "Manrope", system-ui, sans-serif; font-size: 0.72rem; }
+#content-related h3 { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.18em; }
+.actionlist li { border-bottom-color: var(--line); }
+
+/* Вход */
+.login { background: var(--bg); }
+.login #container { background: var(--surface); border: 1px solid var(--line); border-radius: 28px; margin-top: 10vh; overflow: hidden; }
+.login #header { justify-content: center; padding: 24px 40px; border-bottom: 1px solid var(--line); }
+.login #content { padding: 28px 32px; }
+.login .form-row label { color: var(--muted); font-size: 0.85rem; }
+.login .form-row input { width: 100%; }
+.login .submit-row { background: transparent; border: none; padding: 1em 0 0; }
+.login .submit-row input { width: 100%; background: var(--gold); color: #14151a; }
+.login .submit-row input:hover { background: var(--default-button-hover-bg); color: #14151a; }
+.login .password-reset-link { text-align: center; }
+
+#footer { padding: 20px 40px; color: var(--muted); font-size: 0.8rem; }
